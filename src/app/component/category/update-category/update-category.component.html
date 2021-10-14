@@ -1,0 +1,65 @@
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+      <h2>Update Category</h2>
+    </div>
+    <div class="col-2 mr-0 text-right">
+      <button (click)="gotoList()" class="btn btn-outline-info text-dark">Back To List</button>
+    </div>
+  </div>
+  <div class="tabloop">
+    <form [formGroup]="updateForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-4 form-group">
+          <label for="categoryName" class="font-weight-bolder">Name<span class="text-danger">(*)</span></label>
+          <input type="text" class="form-control" formControlName="categoryName" [(ngModel)]="category.categoryName" id="categoryName" name="categoryName"
+          [ngClass]="{
+            'is-invalid':(f.categoryName.invalid && f.categoryName.touched),
+            'is-valid': f.categoryName.valid && f.categoryName.touched
+          }">
+          <div *ngIf="f.categoryName.invalid && f.categoryName.touched" class="invalid-feedback">
+            <div *ngIf="f.categoryName.errors">
+              {{validationMessage.getErrorMessage("Category name", f.categoryName.errors)}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-4 form-group">
+          <label for="categoryCode" class="font-weight-bolder">Code<span class="text-danger">(*)</span></label>
+          <input type="text" class="form-control" formControlName="categoryCode" [(ngModel)]="category.categoryCode" id="categoryCode" name="categoryCode"
+          [ngClass]="{
+            'is-invalid':(f.categoryCode.invalid && f.categoryCode.touched),
+            'is-valid': f.categoryCode.valid && f.categoryCode.touched
+          }">
+          <div *ngIf="f.categoryCode.invalid && f.categoryCode.touched" class="invalid-feedback">
+            <div *ngIf="f.categoryCode.errors">
+              {{validationMessage.getErrorMessage("Category code", f.categoryCode.errors)}}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12 form-group">
+          <label for="description" class="font-weight-bolder">Desciption</label>
+          <textarea class="form-control" formControlName="description" [(ngModel)]="category.description" cols="20" rows="7" id="description" name="description"
+            [ngClass]="{
+              'is-invalid':(f.description.invalid && f.description.touched),
+              'is-valid': f.description.valid && f.description.touched
+            }">
+          </textarea>
+          <div *ngIf="f.description.invalid && f.description.touched" class="invalid-feedback">
+            <div *ngIf="f.description.errors">
+              {{validationMessage.getErrorMessage("Description", f.description.errors)}}
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <button class="btn btn-outline-info text-dark">Update</button>
+
+    </form>
+  </div>
+</div>
+
+

@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+      <h2>Detail Category</h2>
+    </div>
+    <div class="col-2 mr-0 text-right">
+      <button (click)="goToList()" class="btn btn-outline-info text-dark">Back To List</button>
+    </div>
+  </div>
+
+  <form *ngIf="category">
+    <div class="row">
+      <div class="col-8 form-group">
+        <label for="id" class="font-weight-bolder">ID<span class="text-danger">(*)</span></label>
+        <input type="text" class="form-control" [(ngModel)]="category.id"  id="id" name="id" readonly>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 form-group">
+        <label for="categoryName" class="font-weight-bolder">Name<span class="text-danger">(*)</span></label>
+        <input type="text" class="form-control" [(ngModel)]="category.categoryName" id="categoryName" name="categoryName" readonly>
+      </div>
+
+      <div class="col-4 form-group">
+        <label for="categoryCode" class="font-weight-bolder">Code<span class="text-danger">(*)</span></label>
+        <input type="text" class="form-control" [(ngModel)]="category.categoryCode" id="categoryCode" name="categoryCode" readonly>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 form-group">
+        <label for="description" class="font-weight-bolder">Desciption</label>
+        <textarea class="form-control" [(ngModel)]="category.description" cols="20" rows="7" id="description" name="description" readonly></textarea>
+      </div>
+    </div>
+  </form>
+
+</div>
+
+
+

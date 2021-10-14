@@ -1,0 +1,117 @@
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+      <h2>Update Book</h2>
+    </div>
+    <div class="col-2 mr-0 text-right">
+      <button (click)="gotoList()" class="btn btn-outline-info text-dark">Back To List</button>
+    </div>
+  </div>
+  <form [formGroup]="updateForm" (ngSubmit)="onSubmit()" class="tabloop">
+    <div class="row">
+      <div class="col-6 form-group">
+        <label for="name" class="font-weight-bolder">Name<span class="text-danger">(*)</span></label>
+        <input type="text" class="form-control" formControlName="name" id="name" name="name" [(ngModel)]="book.name"
+        [ngClass]="{
+          'is-invalid':(f.name.invalid && f.name.touched),
+          'is-valid': f.name.valid && f.name.touched
+        }">
+        <div *ngIf="f.name.invalid && f.name.touched" class="invalid-feedback">
+          <div *ngIf="f.name.errors">
+            {{validationMessage.getErrorMessage("name", f.name.errors)}}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6 form-group">
+        <label for="author" class="font-weight-bolder">Author<span class="text-danger">(*)</span></label>
+        <input type="text" class="form-control" formControlName="author" [(ngModel)]="book.author" id="author" name="author"
+        [ngClass]="{
+          'is-invalid':(f.author.invalid && f.author.touched),
+          'is-valid': f.author.valid && f.author.touched
+        }">
+        <div *ngIf="f.author.invalid && f.author.touched" class="invalid-feedback">
+          <div *ngIf="f.author.errors">
+            {{validationMessage.getErrorMessage("Author", f.author.errors)}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-3 form-group">
+        <label for="categoryCode" class="font-weight-bolder">Category<span class="text-danger">(*)</span></label>
+        <select class="form-control" formControlName="categoryCode" [(ngModel)]="book.categoryCode" id="categoryCode" name="categoryCode"
+          [ngClass]="{
+            'is-invalid':(f.categoryCode.invalid && f.categoryCode.touched),
+            'is-valid': f.categoryCode.valid && f.categoryCode.touched
+          }">
+          <option value="">--- Chọn thể loại ---</option>
+          <option *ngFor="let category of categories" [selected]="category.categoryCode === book.categoryCode" [ngValue]="category.categoryCode"  >{{category.categoryName}}</option>
+        </select>
+        <div *ngIf="f.categoryCode.invalid && f.categoryCode.touched" class="invalid-feedback">
+          <div *ngIf="f.categoryCode.errors">
+            {{validationMessage.getErrorMessage("CategoryCode", f.categoryCode.errors)}}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3 form-group">
+        <label for="publishedDate" class="font-weight-bolder">Published date<span class="text-danger">(*)</span></label>
+        <input type="date" class="form-control" (change)="checkDateValidity()" formControlName="publishedDate" [(ngModel)]="book.publishedDate" id="publishedDate" name="publishedDate"
+        [ngClass]="{
+          'is-invalid':(f.publishedDate.invalid && f.publishedDate.touched),
+          'is-valid': f.publishedDate.valid && f.publishedDate.touched
+        }">
+        <div *ngIf="f.publishedDate.invalid && f.publishedDate.touched" class="invalid-feedback">
+          <div *ngIf="f.publishedDate.errors">
+            {{validationMessage.getErrorMessage("Published Date", f.publishedDate.errors)}}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3 form-group">
+        <label for="price" class="font-weight-bolder">Price<span class="text-danger">(*)</span></label>
+        <input type="number" class="form-control" formControlName="price" [(ngModel)]="book.price" id="price" name="price"
+        [ngClass]="{
+          'is-invalid':(f.price.invalid && f.price.touched),
+          'is-valid': f.price.valid && f.price.touched
+        }">
+        <div *ngIf="f.price.invalid && f.price.touched" class="invalid-feedback">
+          <div *ngIf="f.price.errors">
+            {{validationMessage.getErrorMessage("Price", f.price.errors)}}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-3 form-group">
+        <label for="quantity" class="font-weight-bolder">Quantity<span class="text-danger">(*)</span></label>
+        <input type="number" class="form-control" formControlName="quantity" [(ngModel)]="book.quantity" id="quantity" name="quantity"
+        [ngClass]="{
+          'is-invalid':(f.quantity.invalid && f.quantity.touched),
+          'is-valid': f.quantity.valid && f.quantity.touched
+        }">
+        <div *ngIf="f.quantity.invalid && f.quantity.touched" class="invalid-feedback">
+          <div *ngIf="f.quantity.errors">
+            {{validationMessage.getErrorMessage("Quantity", f.quantity.errors)}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description" class="font-weight-bolder">Desciption</label>
+      <textarea class="form-control" formControlName="description" [(ngModel)]="book.description" cols="20" rows="7" id="description" name="description"
+        [ngClass]="{
+          'is-invalid':(f.description.invalid && f.description.touched),
+          'is-valid': f.description.valid && f.description.touched
+        }">
+      </textarea>
+      <div *ngIf="f.description.invalid && f.description.touched" class="invalid-feedback">
+        <div *ngIf="f.description.errors">
+          {{validationMessage.getErrorMessage("Description", f.description.errors)}}
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-outline-info text-dark">Update</button>
+  </form>
+</div>

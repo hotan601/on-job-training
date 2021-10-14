@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="panel panel-primary">
+     <div class="panel-heading">
+       <h2>Categories List</h2>
+       <div class="row mb-3">
+         <div class="col-10">
+          <div class="row">
+            <div class="col-3">
+              <input
+                appAutoFocusDirective
+                class="form-control font-italic mb-0 h-100"
+                style="font-size: 0.9em;"
+                type="text" #input
+                (keyup.enter)="searchBook(keywords)"
+                name="keywords" [(ngModel)]="keywords"
+                placeholder="Search by name or author">
+            </div>
+            <div class="col-9 px-0">
+            </div>
+          </div>
+         </div>
+         <div class="col-2 mr-0 text-right">
+           <button class="btn btn-outline-info" (click)="deleteMultipleCategories()">Remove Selected</button>
+         </div>
+       </div>
+     </div>
+     <div class="panel-body">
+       <table class="table table-striped table-hover table-bordered hover">
+         <thead class="thead-dark">
+           <tr class="text-center">
+             <!-- <th><input type="checkbox" [checked]="isAllCheckBoxChecked()" (change)="checkAllCheckBox($event)"></th> -->
+             <th>Code</th>
+             <th>Name</th>
+             <th>Action</th>
+           </tr>
+         </thead>
+         <tbody>
+           <tr *ngFor="let category of categories | slice: (page-1) * limit : page * limit" >
+            <!-- <td class="text-center"><input type="checkbox" value="{{category.id}}" [(ngModel)]="categories[i].checked"></td> -->
+            <td class="pl-2">
+              <div tooltip={{category.categoryCode}}>
+                {{category.categoryCode}}
+              </div>
+            </td>
+            <td class="pl-2">
+               <div tooltip={{category.categoryName}}>
+                 <a routerLink="" (click)="categoryDetails(category.id)">{{category.categoryName}}</a>
+               </div>
+            </td>
+
+            <td class="text-center px-0">
+              <button type="button" (click)="categoryDetails(category.id)" class="btn px-1 font-weight-bolder py-0" tooltip="details">
+                <i class="fas fa-info-circle text-info"></i>
+              </button>
+              <button type="button" (click)="updateCategory(category.id)" class="btn mx-2 px-1 font-weight-bolder  py-0" tooltip="update">
+                <i class="fas fa-edit text-warning"></i>
+              </button>
+              <button type="button" (click)="deleteCategory(category.id)" class="btn  px-1 font-weight-bolder  py-0" tooltip="delete">
+                <i class="far fa-trash-alt text-danger"></i>
+              </button>
+            </td>
+           </tr>
+         </tbody>
+       </table>
+     </div>
+
+     <div class="row display-container px-0">
+       <div class="col-sm-12 col-md-4">
+         <label>Show</label>
+         <select class="select" [(ngModel)]="limit" (change)="change($event)">
+           <option [value]="2">2</option>
+           <option [value]="4">4</option>
+           <option [value]="totalItem">All</option>
+         </select>
+       </div>
+       <div class="paging">
+         <div class="col-sm-12 col-md-5 text-right  paging-display" style="display: contents;">
+           <label class="pt-2" *ngIf="page==1&&(page*limit)<totalItem && books?.length!=0">Showing: 1 - {{page*limit}} of
+               {{totalItem}} items</label>
+           <label class="pt-2"*ngIf="page!=1&&(page*limit)<totalItem && books?.length!=0">Showing: {{((page-1)*limit)+1}} -
+               {{page*limit}} of
+               {{totalItem}} items</label>
+           <label class="pt-2"*ngIf="page!=1&&(page*limit)>=totalItem && books?.length!=0">Showing: {{((page-1)*limit)+1}} -
+               {{totalItem}} of
+               {{totalItem}} items</label>
+           <label class="pt-2"*ngIf="page==1&&(page*limit)>totalItem && books?.length!=0">Showing: 1 - {{totalItem}} of
+               {{totalItem}} items</label>
+           <label class="pt-2"*ngIf="page==1&&(page*limit)==totalItem && books?.length!=0">Showing: 1 - {{totalItem}} of
+             {{totalItem}} items</label>
+           <label class="pt-2"*ngIf="books?.length==0">Showing: 0 items</label>
+         </div>
+         <div class="col-sm-12 col-md-3">
+           <div class="dataTables_paginate paging_simple_numbers" style="padding: 0;">
+             <ngb-pagination [(page)]="page" [pageSize]="limit" [collectionSize]="totalItem" [boundaryLinks]="true">
+               <ng-template ngbPaginationPages let-page let-pages="pages">
+                 <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+                   <div class="form-group d-flex flex-nowrap px-2">
+                     <label id="paginationInputLabel" for="paginationInput"
+                         class="col-form-label mr-2 ml-1">Trang</label>
+                     <input  (keydown.Tab)="onKey($event);false;" #i type="text" inputmode="numeric"
+                         pattern="[0-9]*" class="form-control custom-pages-input" id="paginationInput"
+                         [value]="page" (keyup.enter)="selectPage(i.value)" (blur)="selectPage(i.value)"
+                         (input)="formatInput($any($event).target)"
+                         aria-labelledby="paginationInputLabel paginationDescription"
+                         style="width: 2.5rem; height: 34px;" />
+                     <span id="paginationDescription" class="col-form-label text-nowrap px-2">
+                         / {{pages.length}}</span>
+                   </div>
+                 </li>
+               </ng-template>
+             </ngb-pagination>
+           </div>
+         </div>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+
+
+

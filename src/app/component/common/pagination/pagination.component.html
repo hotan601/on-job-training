@@ -1,0 +1,127 @@
+<div class="row pagination pt-2 hover">
+    <div class="col-md-3">
+        <div class="form-group row size">
+            <p class="ol-form-label ">Show</p>
+                <select
+                    name=""
+                    id=""
+                    [(ngModel)]="pagingArgs.pageSize"
+                    class="form-control"
+                    (change)="changePageSize()"
+                >
+                    <option value="5" selected>5</option>
+                    <option value="10">10</option>
+                    <option value="15">15</option>
+                    <option value="{{totalElements}}">All</option>
+                </select>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="form-group row float-right mr-1 ">
+            <p class="mr-1 showing">
+                Showing
+                {{
+                    (pagingArgs.pageNumber - 1) * pagingArgs.pageSize * 1 + 1
+                }}
+                to
+                {{
+                    pagingArgs.pageSize == -1
+                        ? totalElements
+                        : pagingArgs.pageNumber * pagingArgs.pageSize >
+                          totalElements
+                        ? totalElements
+                        : pagingArgs.pageNumber * pagingArgs.pageSize
+                }}
+                of {{ totalElements }} items.
+            </p>
+            <input
+                type="number"
+                class="form-control mr-1"
+                value="1"
+                min="1"
+                max="{{ totalPages }}"
+                (keyup.enter)="goToPage()"
+                [(ngModel)]="specificPage"
+                style="width: 50px"
+            />
+            <nav aria-label="Page navigation example">
+                <ul class="pagination" (click)="onChangePage($event)">
+                    <!-- First Page -->
+                    <li
+                        class="page-item"
+                        [class.disabled]="pagingArgs.pageNumber == 1"
+                    >
+                        <a class="page-link">&laquo;&laquo;</a>
+                    </li>
+
+                    <!-- Previous Page -->
+                    <li
+                        class="page-item"
+                        [class.disabled]="pagingArgs.pageNumber == 1"
+                    >
+                        <a class="page-link" aria-disabled="true">&laquo;</a>
+                    </li>
+
+                    <li
+                        class="page-item"
+                        [ngClass]="{ active: pagingArgs.pageNumber == 1 }"
+                    >
+                        <a class="page-link">1</a>
+                    </li>
+
+                    <!-- .... -->
+                    <li
+                        class="page-item"
+                        *ngIf="pagingArgs.pageNumber - delta > 2"
+                    >
+                        <a class="page-link">...</a>
+                    </li>
+
+                    <li
+                        class="page-item"
+                        *ngFor="let index of arr"
+                        [ngClass]="{ active: index == pagingArgs.pageNumber }"
+                    >
+                        <a class="page-link">{{ index }}</a>
+                    </li>
+
+                    <li
+                        class="page-item"
+                        *ngIf="
+                            totalPages - 1 >
+                            pagingArgs.pageNumber * 1 + delta * 1
+                        "
+                    >
+                        <a class="page-link">...</a>
+                    </li>
+
+                    <li
+                        class="page-item"
+                        *ngIf="totalPages != 1"
+                        [ngClass]="{
+                            active: totalPages == pagingArgs.pageNumber
+                        }"
+                    >
+                        <a class="page-link">{{ totalPages }}</a>
+                    </li>
+
+                    <!-- Next Page-->
+                    <li
+                        class="page-item"
+                        [class.disabled]="pagingArgs.pageNumber == totalPages"
+                    >
+                        <a class="page-link">&raquo;</a>
+                    </li>
+
+                    <!-- Last Page -->
+                    <li
+                        class="page-item"
+                        [class.disabled]="pagingArgs.pageNumber == totalPages"
+                    >
+                        <a class="page-link">&raquo;&raquo; </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
