@@ -4,4 +4,5 @@ public class TestDTO {
 	private String testID;
 	private String testName;
 	private int testAge;
+	private String testAddress;
 }
